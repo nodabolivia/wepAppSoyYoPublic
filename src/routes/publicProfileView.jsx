@@ -11,7 +11,13 @@ import Loading from "../components/loading";
 import PublicLink from "../components/publicLink";
 import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
-import { RiShareForwardLine } from "react-icons/ri";
+import { FaTiktok,FaTwitterSquare } from "react-icons/fa";
+import { RiShareForwardLine,RiLinkedinFill,RiFacebookBoxFill,RiInstagramLine,RiTwitchFill } from "react-icons/ri";
+
+import call from "../assets/img/call-icon.png";
+import mail from "../assets/img/mail-icon.png";
+import map from "../assets/img/map-icon.png";
+import whatsapp from "../assets/img/whatsapp-icon.png";
 
 export default function PublicProfileView() {
   const params = useParams(); //permite tener info de las URL, es decir las variables que se pasaron por la direccion del enlace
@@ -95,18 +101,147 @@ export default function PublicProfileView() {
           </div>
           <div className={style.othersContainer}>
             <div className={style.qrContainer}>
-              <MdQrCode2  className={style.qrIcon} />
-              <br/>Modo Offline
+              <MdQrCode2 className={style.qrIcon} />
+              <br />
+              Modo Offline
             </div>
             <div>
-            <a rel="nofollow" href="https://taggo.one/EIIYS7SIF/vcard.vcf" target="_top" 
-            class={style.saveContainer} >
-              <span>Guardar Contacto</span>
-            </a>
+              <a
+                rel="nofollow"
+                href="https://taggo.one/EIIYS7SIF/vcard.vcf"
+                target="_top"
+                class={style.saveContainer}
+              >
+                <span>Guardar Contacto</span>
+              </a>
             </div>
             <div className={style.shareContainer}>
-              <RiShareForwardLine className={style.shareIcon}/>
-              <br/>Compartir en RRSS
+              <RiShareForwardLine className={style.shareIcon} />
+              <br />
+              Compartir en RRSS
+            </div>
+          </div>
+          <div className={style.primaryLinksContainer}>
+            <a
+              rel="nofollow"
+              className={style.primaryLink}
+              href="https://taggo.one/elianacalderon#"
+            >
+              <img
+                src={call}
+                className={style.primaryLinksIcon}
+                alt="call"
+                // width="50"
+              />{" "}
+              <br />
+              Llamar
+            </a>
+            <a
+              rel="nofollow"
+              className={style.primaryLink}
+              href="https://taggo.one/elianacalderon#"
+            >
+              <img
+                src={mail}
+                className={style.primaryLinksIcon}
+                alt="mail"
+                // width="50"
+              />{" "}
+              <br />
+              Email
+            </a>
+            <a
+              rel="nofollow"
+              className={style.primaryLink}
+              href="https://taggo.one/elianacalderon#"
+            >
+              <img
+                src={whatsapp}
+                className={style.primaryLinksIcon}
+                alt="whatsapp"
+                // width="50"
+              />{" "}
+              <br />
+              WhatsApp
+            </a>
+            <a
+              rel="nofollow"
+              className={style.primaryLink}
+              href="https://taggo.one/elianacalderon#"
+            >
+              <img
+                src={map}
+                className={style.primaryLinksIcon}
+                alt="map"
+                // width="50"
+              />{" "}
+              <br />
+              Mapa
+            </a>
+          </div>
+          <div className={style.secondaryLinksOutsideContainer}>
+            <div className={style.secondaryLinksContainer}>
+              <div className={style.secondaryLinksSort}>
+                <div className={style.secondaryLinkRow}>
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
+                    className={style.secondaryLink}
+                  >
+                    <RiLinkedinFill className={style.secondaryLinkIcon}/>
+                    <span className={style.secondaryLinkSpan}>LinkedIn</span>
+                  </a>
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
+                    className={style.secondaryLink}
+                  >
+                    <RiFacebookBoxFill className={style.secondaryLinkIcon}/>
+                    <span className={style.secondaryLinkSpan}>Facebook</span>
+                  </a>
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
+                    className={style.secondaryLink}
+                  >
+                    <RiInstagramLine className={style.secondaryLinkIcon}/>
+                    <span className={style.secondaryLinkSpan}>Instagram</span>
+                  </a>
+                 
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
+                    className={style.secondaryLink}
+                  >
+                    <FaTiktok className={style.secondaryLinkIcon}/>
+                    <span className={style.secondaryLinkSpan}>Tiktok</span>
+                  </a>
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
+                    className={style.secondaryLink}
+                  >
+                    <FaTwitterSquare className={style.secondaryLinkIcon}/>
+                    <span className={style.secondaryLinkSpan}>Twitter</span>
+                  </a>
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
+                    className={style.secondaryLink}
+                  >
+                    <RiTwitchFill className={style.secondaryLinkIcon}/>
+                    <span className={style.secondaryLinkSpan}>Twitch</span>
+                  </a>
+
+                  
+                </div>
+              </div>
             </div>
           </div>
         </div>
