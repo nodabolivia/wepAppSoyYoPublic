@@ -6,6 +6,7 @@ import {
   getUserPublicProfileInfo,
 } from "../firebase/firebase";
 import style from "../styles/publicProfileView2.module.css";
+import styleFooter from "../styles/footer.module.css";
 import styleLinks from "../styles/publicLink.module.css";
 import Loading from "../components/loading";
 import PublicLink from "../components/publicLink";
@@ -13,22 +14,25 @@ import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
 
-import logo from '../assets/img/logo-mt-corp.svg';
-import { SecondaryLink } from "../components/secondaryLink";
-import { PrimaryLink } from "../components/primaryLink";
+import logo from "../assets/img/logo-mt-corp.svg";
+import { ListSecondaryLink } from "../components/listSecondaryLink";
+import { ListPrimaryLink } from "../components/listPrimaryLink";
 
 export default function PublicProfileView() {
   const params = useParams(); //permite tener info de las URL, es decir las variables que se pasaron por la direccion del enlace
-  const [profile, setProfile] = useState({});
+  const [username, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [career, setCareer] = useState("");
+
   const [linkList, setLinkList] = useState([]);
   const userRef = useRef(null);
   const [url, setUrl] = useState("");
   const [state, setState] = useState(0);
 
   useEffect(() => {
-    // setState(1);
+    setState(1);
     getProfile();
-  }, [params]);
+  }, [params, state]);
 
   async function getProfile() {
     const publicId = params.publicId;
@@ -37,7 +41,10 @@ export default function PublicProfileView() {
       if (userUid) {
         try {
           const userInfo = await getUserPublicProfileInfo(userUid);
-          setProfile(userInfo.profileInfo);
+          setUsername(userInfo.profileInfo.username);
+          setDisplayName(userInfo.profileInfo.displayName);
+          setCareer(userInfo.profileInfo.career);
+
           setLinkList(userInfo.linksInfo);
           const url = await getProfilePhotoUrl(
             userInfo.profileInfo.profilePicture
@@ -45,9 +52,7 @@ export default function PublicProfileView() {
           userRef.current = userInfo.profileInfo;
 
           setUrl(url);
-          console.log(profile);
-          console.log(url);
-          // setState(8);
+          setState(8);
         } catch (error) {
           console.log(error);
         }
@@ -59,7 +64,10 @@ export default function PublicProfileView() {
 
   function handleOnLoadImage() {
     setState(8);
-    console.log("loaded");
+  }
+  function getLinksListByCategory(category){
+    const links = linkList.filter((link)=>(link.category===category) );    
+    return links;
   }
 
   if (state === 7) {
@@ -76,15 +84,14 @@ export default function PublicProfileView() {
           <img
             className={style.imageAvatar}
             src={url}
-            // alt={profile?.profileInfo.displayName}
-            alt={""}
+            alt={displayName}
             onLoad={handleOnLoadImage}
           />
         </div>
         <div className={style.afterImageContainer}>
           <div className={style.infoContainer}>
-            <span className={style.infoDisplayName}>Carolina Cladera</span>
-            <div className={style.infoCareer}>Programadora</div>
+            <span className={style.infoDisplayName}>{displayName}</span>
+            <div className={style.infoCareer}>{career}</div>
           </div>
           <div className={style.othersContainer}>
             <div className={style.qrContainer}>
@@ -109,78 +116,37 @@ export default function PublicProfileView() {
             </div>
           </div>
           <div className={style.primaryLinksContainer}>
-            <PrimaryLink
-            url="https://taggo.one/elianacalderon#"
-            socialMedia="call"
-            title="Llamar"          
-            ></PrimaryLink>
-            <PrimaryLink
-            url="https://taggo.one/elianacalderon#"
-            socialMedia="whatsapp"
-            title="Whatsapp"           
-            ></PrimaryLink>
-            <PrimaryLink
-            url="https://taggo.one/elianacalderon#"
-            socialMedia="mail"
-            title="Email"          
-            ></PrimaryLink>
-            <PrimaryLink
-            url="https://taggo.one/elianacalderon#"
-            socialMedia="map"
-            title="Mapa"          
-            ></PrimaryLink>
+            <ListPrimaryLink
+             linkList={getLinksListByCategory("primary")}
+            ></ListPrimaryLink>
           </div>
           <div className={style.secondaryLinksOutsideContainer}>
             <div className={style.secondaryLinksContainer}>
               <div className={style.secondaryLinksSort}>
                 <div className={style.secondaryLinkRow}>
-                  <SecondaryLink
-                    socialMedia="linkedin"
-                    title="LinkedIn"
-                    url="https://www.linkedin.com"
-                  ></SecondaryLink>
-                  {/* <SecondaryLink
-                    socialMedia="instagram"
-                    title="Instagram"
-                    url="https://www.instagram.com"
-                  ></SecondaryLink>
-                  <SecondaryLink
-                    socialMedia="facebook"
-                    title="Facebook"
-                    url="https://www.facebook.com"
-                  ></SecondaryLink>
-                  <SecondaryLink
-                    socialMedia="tiktok"
-                    title="TikTok"
-                    url="https://www.linkedin.com"
-                  ></SecondaryLink>
-                  <SecondaryLink
-                    socialMedia="twitch"
-                    title="Twitch"
-                    url="https://www.linkedin.com"
-                  ></SecondaryLink>
-                  <SecondaryLink
-                    socialMedia="twitter"
-                    title="Twitter"
-                    url="https://www.linkedin.com"
-                  ></SecondaryLink> */}
+                  <ListSecondaryLink
+                  linkList={getLinksListByCategory("secondary")}
+                  ></ListSecondaryLink>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Row>
-      <div className={style.footerContainer}>
+      <div className={styleFooter.footerContainer}>
         <a
-           rel="noreferrer"
-           target="_blank"
-           className={style.footerLinkContainer}
-           href="https://mtcorplatam.com/"
-           >
-             {""}
-            <img src={logo} alt="MTCorp logotipo" className={style.footerLinkImg}/>
+          rel="noreferrer"
+          target="_blank"
+          className={styleFooter.footerLinkContainer}
+          href="https://mtcorplatam.com/"
+        >
+          {""}
+          <img
+            src={logo}
+            alt="MTCorp logotipo"
+            className={styleFooter.footerLinkImg}
+          />
         </a>
-
       </div>
     </div>
   );

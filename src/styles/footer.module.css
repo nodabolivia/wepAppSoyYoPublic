@@ -1,0 +1,22 @@
+.footerContainer {   
+    /* background: #eee; */
+    background-color: rgba(84, 84, 84, 0.2);
+    padding: 40px 20px;
+    /* padding-bottom: 50px; */
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .footerLinkContainer:hover {
+    box-sizing: border-box;
+    padding: 15px 180px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    width: fit-content;
+    background-color: #262626;
+    background-color: rgba(84, 84, 84, 0.1);
+  }
+  .footerLinkImg {
+    width: 90px;
+  }
+  

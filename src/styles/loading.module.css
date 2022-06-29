@@ -5,7 +5,7 @@
 }
 .containerLoading{
     height:100vh;
-    background-color:rgb(252, 159, 58);
+    background-color: rgba(84, 84, 84, 0.3);
     display: flex;
     justify-content: center;
     vertical-align: center;
