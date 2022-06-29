@@ -7,9 +7,8 @@ import {
 } from "../firebase/firebase";
 import style from "../styles/publicProfileView2.module.css";
 import styleFooter from "../styles/footer.module.css";
-import styleLinks from "../styles/publicLink.module.css";
 import Loading from "../components/loading";
-import PublicLink from "../components/publicLink";
+
 import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -32,7 +31,7 @@ export default function PublicProfileView() {
   useEffect(() => {
     setState(1);
     getProfile();
-  }, [params, state]);
+  }, [params]);
 
   async function getProfile() {
     const publicId = params.publicId;
@@ -44,7 +43,6 @@ export default function PublicProfileView() {
           setUsername(userInfo.profileInfo.username);
           setDisplayName(userInfo.profileInfo.displayName);
           setCareer(userInfo.profileInfo.career);
-
           setLinkList(userInfo.linksInfo);
           const url = await getProfilePhotoUrl(
             userInfo.profileInfo.profilePicture
@@ -52,7 +50,7 @@ export default function PublicProfileView() {
           userRef.current = userInfo.profileInfo;
 
           setUrl(url);
-          setState(8);
+          // setState(8);
         } catch (error) {
           console.log(error);
         }
@@ -63,7 +61,7 @@ export default function PublicProfileView() {
   }
 
   function handleOnLoadImage() {
-    setState(8);
+      setState(8);
   }
   function getLinksListByCategory(category){
     const links = linkList.filter((link)=>(link.category===category) );    
@@ -85,7 +83,6 @@ export default function PublicProfileView() {
             className={style.imageAvatar}
             src={url}
             alt={displayName}
-            onLoad={handleOnLoadImage}
           />
         </div>
         <div className={style.afterImageContainer}>

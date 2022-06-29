@@ -1,4 +1,3 @@
-import style from "../styles/linkPrimary.module.css";
 import { SecondaryLink } from "./secondaryLink";
 
 export const ListSecondaryLink = ({ linkList }) => {
@@ -8,6 +7,7 @@ export const ListSecondaryLink = ({ linkList }) => {
         <>
           {linkList.map((link) => (
             <SecondaryLink
+              key={link.docId}
               socialMedia={link.socialmedia}
               title={link.title}
               url={link.url}
