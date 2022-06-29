@@ -11,22 +11,20 @@ import Loading from "../components/loading";
 import PublicLink from "../components/publicLink";
 import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
-import { FaTiktok,FaTwitterSquare } from "react-icons/fa";
-import { RiShareForwardLine,RiLinkedinFill,RiFacebookBoxFill,RiInstagramLine,RiTwitchFill } from "react-icons/ri";
+import { RiShareForwardLine } from "react-icons/ri";
 
-import call from "../assets/img/call-icon.png";
-import mail from "../assets/img/mail-icon.png";
-import map from "../assets/img/map-icon.png";
-import whatsapp from "../assets/img/whatsapp-icon.png";
+import logo from '../assets/img/logo-mt-corp.svg';
+import { SecondaryLink } from "../components/secondaryLink";
+import { PrimaryLink } from "../components/primaryLink";
 
 export default function PublicProfileView() {
   const params = useParams(); //permite tener info de las URL, es decir las variables que se pasaron por la direccion del enlace
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState({});
   const [linkList, setLinkList] = useState([]);
   const userRef = useRef(null);
-
   const [url, setUrl] = useState("");
   const [state, setState] = useState(0);
+
   useEffect(() => {
     // setState(1);
     getProfile();
@@ -39,15 +37,17 @@ export default function PublicProfileView() {
       if (userUid) {
         try {
           const userInfo = await getUserPublicProfileInfo(userUid);
-          // setProfile({ userInfo });
           setProfile(userInfo.profileInfo);
           setLinkList(userInfo.linksInfo);
-          userRef.currentUser = userInfo.profileInfo;
           const url = await getProfilePhotoUrl(
             userInfo.profileInfo.profilePicture
           );
+          userRef.current = userInfo.profileInfo;
+
           setUrl(url);
-          setState(8);
+          console.log(profile);
+          console.log(url);
+          // setState(8);
         } catch (error) {
           console.log(error);
         }
@@ -69,19 +69,6 @@ export default function PublicProfileView() {
   //   return <Loading></Loading>;
   // }
   return (
-    // <div className={style.profileContainer}>
-    //   <div className={style.profilePicture}>
-    //     <img src={url} alt="Foto de perfil" width="100px" onLoad={handleOnLoadImage}/>
-
-    //   </div>
-    //   <h2>{profile?.profileInfo.username}</h2>
-    //   <h3>{profile?.profileInfo.displayName}</h3>
-    //   <div className={styleLinks.publicLinksContainer}>
-    //     {profile?.linksInfo.map((link) => (
-    //       <PublicLink key={link.docId} url={link.url} title={link.title}  />
-    //     ))}
-    //   </div>
-    // </div>
     <div className={style.backContainer}>
       <div className={style.backRectangle}></div>
       <Row className={style.profileContainer}>
@@ -110,7 +97,7 @@ export default function PublicProfileView() {
                 rel="nofollow"
                 href="https://taggo.one/EIIYS7SIF/vcard.vcf"
                 target="_top"
-                class={style.saveContainer}
+                className={style.saveContainer}
               >
                 <span>Guardar Contacto</span>
               </a>
@@ -122,130 +109,79 @@ export default function PublicProfileView() {
             </div>
           </div>
           <div className={style.primaryLinksContainer}>
-            <a
-              rel="nofollow"
-              className={style.primaryLink}
-              href="https://taggo.one/elianacalderon#"
-            >
-              <img
-                src={call}
-                className={style.primaryLinksIcon}
-                alt="call"
-                // width="50"
-              />{" "}
-              <br />
-              Llamar
-            </a>
-            <a
-              rel="nofollow"
-              className={style.primaryLink}
-              href="https://taggo.one/elianacalderon#"
-            >
-              <img
-                src={mail}
-                className={style.primaryLinksIcon}
-                alt="mail"
-                // width="50"
-              />{" "}
-              <br />
-              Email
-            </a>
-            <a
-              rel="nofollow"
-              className={style.primaryLink}
-              href="https://taggo.one/elianacalderon#"
-            >
-              <img
-                src={whatsapp}
-                className={style.primaryLinksIcon}
-                alt="whatsapp"
-                // width="50"
-              />{" "}
-              <br />
-              WhatsApp
-            </a>
-            <a
-              rel="nofollow"
-              className={style.primaryLink}
-              href="https://taggo.one/elianacalderon#"
-            >
-              <img
-                src={map}
-                className={style.primaryLinksIcon}
-                alt="map"
-                // width="50"
-              />{" "}
-              <br />
-              Mapa
-            </a>
+            <PrimaryLink
+            url="https://taggo.one/elianacalderon#"
+            socialMedia="call"
+            title="Llamar"          
+            ></PrimaryLink>
+            <PrimaryLink
+            url="https://taggo.one/elianacalderon#"
+            socialMedia="whatsapp"
+            title="Whatsapp"           
+            ></PrimaryLink>
+            <PrimaryLink
+            url="https://taggo.one/elianacalderon#"
+            socialMedia="mail"
+            title="Email"          
+            ></PrimaryLink>
+            <PrimaryLink
+            url="https://taggo.one/elianacalderon#"
+            socialMedia="map"
+            title="Mapa"          
+            ></PrimaryLink>
           </div>
           <div className={style.secondaryLinksOutsideContainer}>
             <div className={style.secondaryLinksContainer}>
               <div className={style.secondaryLinksSort}>
                 <div className={style.secondaryLinkRow}>
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
-                    className={style.secondaryLink}
-                  >
-                    <RiLinkedinFill className={style.secondaryLinkIcon}/>
-                    <span className={style.secondaryLinkSpan}>LinkedIn</span>
-                  </a>
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
-                    className={style.secondaryLink}
-                  >
-                    <RiFacebookBoxFill className={style.secondaryLinkIcon}/>
-                    <span className={style.secondaryLinkSpan}>Facebook</span>
-                  </a>
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
-                    className={style.secondaryLink}
-                  >
-                    <RiInstagramLine className={style.secondaryLinkIcon}/>
-                    <span className={style.secondaryLinkSpan}>Instagram</span>
-                  </a>
-                 
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
-                    className={style.secondaryLink}
-                  >
-                    <FaTiktok className={style.secondaryLinkIcon}/>
-                    <span className={style.secondaryLinkSpan}>Tiktok</span>
-                  </a>
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
-                    className={style.secondaryLink}
-                  >
-                    <FaTwitterSquare className={style.secondaryLinkIcon}/>
-                    <span className={style.secondaryLinkSpan}>Twitter</span>
-                  </a>
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
-                    className={style.secondaryLink}
-                  >
-                    <RiTwitchFill className={style.secondaryLinkIcon}/>
-                    <span className={style.secondaryLinkSpan}>Twitch</span>
-                  </a>
-
-                  
+                  <SecondaryLink
+                    socialMedia="linkedin"
+                    title="LinkedIn"
+                    url="https://www.linkedin.com"
+                  ></SecondaryLink>
+                  {/* <SecondaryLink
+                    socialMedia="instagram"
+                    title="Instagram"
+                    url="https://www.instagram.com"
+                  ></SecondaryLink>
+                  <SecondaryLink
+                    socialMedia="facebook"
+                    title="Facebook"
+                    url="https://www.facebook.com"
+                  ></SecondaryLink>
+                  <SecondaryLink
+                    socialMedia="tiktok"
+                    title="TikTok"
+                    url="https://www.linkedin.com"
+                  ></SecondaryLink>
+                  <SecondaryLink
+                    socialMedia="twitch"
+                    title="Twitch"
+                    url="https://www.linkedin.com"
+                  ></SecondaryLink>
+                  <SecondaryLink
+                    socialMedia="twitter"
+                    title="Twitter"
+                    url="https://www.linkedin.com"
+                  ></SecondaryLink> */}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Row>
+      <div className={style.footerContainer}>
+        <a
+           rel="noreferrer"
+           target="_blank"
+           className={style.footerLinkContainer}
+           href="https://mtcorplatam.com/"
+           >
+             {""}
+            <img src={logo} alt="MTCorp logotipo" className={style.footerLinkImg}/>
+        </a>
+
+      </div>
     </div>
   );
 }
