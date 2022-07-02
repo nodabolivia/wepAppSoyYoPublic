@@ -1,5 +1,4 @@
 .secondaryLink {
-  background: #3e0752;
   box-sizing: border-box;
   text-decoration: none;
   justify-content: flex-start;
@@ -11,7 +10,6 @@
   border-radius: 5px;
   padding: 18px;
   text-align: left;
-
   font-weight: 500;
   font-size: 18px;
   border: 0;
@@ -22,7 +20,7 @@
 }
 .secondaryLink:hover {
   color: #fff;
-  background: rgba(62, 7, 82,0.9);
+  /* background: rgba(62, 7, 82,0.9); */
 }
 .secondaryLinkSpan {
   overflow: hidden;

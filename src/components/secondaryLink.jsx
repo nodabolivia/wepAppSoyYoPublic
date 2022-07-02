@@ -7,7 +7,7 @@ import {
 } from "react-icons/ri";
 import style from "../styles/linkSecondary.module.css";
 
-export const SecondaryLink = ({ socialMedia, title, url }) => {
+export const SecondaryLink = ({ socialMedia, title, url,bg,bgHover }) => {
   function handleSocialMediaIcon() {
     switch (socialMedia) {
       case "facebook":
@@ -35,7 +35,8 @@ export const SecondaryLink = ({ socialMedia, title, url }) => {
         target="_blank"
         // href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
         href={url}
-        className={style.secondaryLink}
+        // className={style.secondaryLink}
+        className={`${style.secondaryLink} ${bg} ${bgHover}`}
       >
         {handleSocialMediaIcon()}
         <span className={style.secondaryLinkSpan}>{title}</span>

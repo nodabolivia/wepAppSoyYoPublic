@@ -7,11 +7,11 @@ import style from "../styles/linkPrimary.module.css";
 export const PrimaryLink = ({ socialMedia, title, url }) => {
   function handleSocialMediaIcon() {
     switch (socialMedia) {
-      case "cellphone":
+      case "phone":
         return phone;
       case "whatsapp":
         return whatsapp;
-      case "mail":
+      case "email":
         return mail;
       case "maps":
         return map;

@@ -8,6 +8,7 @@ import {
 import style from "../styles/publicProfileView2.module.css";
 import styleFooter from "../styles/footer.module.css";
 import Loading from "../components/loading";
+import '../styles/theme.css';
 
 import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
@@ -28,6 +29,11 @@ export default function PublicProfileView() {
   const [url, setUrl] = useState("");
   const [state, setState] = useState(0);
 
+  const [theme, setTheme] = useState("default");
+  const [bg, setBg] = useState("first");
+  const [bgHover, setBgHover] = useState("firstHover");
+  
+
   useEffect(() => {
     setState(1);
     getProfile();
@@ -43,12 +49,15 @@ export default function PublicProfileView() {
           setUsername(userInfo.profileInfo.username);
           setDisplayName(userInfo.profileInfo.displayName);
           setCareer(userInfo.profileInfo.career);
+          console.log(userInfo.profileInfo.theme);
+          setTheme(userInfo.profileInfo.theme);
+          console.log(theme);
+          handleTheme(userInfo.profileInfo.theme);
           setLinkList(userInfo.linksInfo);
           const url = await getProfilePhotoUrl(
             userInfo.profileInfo.profilePicture
           );
           userRef.current = userInfo.profileInfo;
-
           setUrl(url);
           // setState(8);
         } catch (error) {
@@ -63,6 +72,42 @@ export default function PublicProfileView() {
   function handleOnLoadImage() {
       setState(8);
   }
+
+
+function handleTheme(theme){
+  switch (theme) {
+    case "default":
+      {
+        setBg("first");
+        setBgHover("firstHover");
+        break;
+      }
+    case "dark":
+     {
+      setBg("second");
+      setBgHover("secondHover");
+      break;
+     }
+    case "colors":
+      {
+        setBg("third");
+        setBgHover("thirdHover");
+        break;
+      }
+
+    default:
+      {
+        setBg("first");
+        setBgHover("firstHover"); 
+         break;
+      }
+    
+  }
+
+}
+
+
+
   function getLinksListByCategory(category){
     const links = linkList.filter((link)=>(link.category===category) );    
     return links;
@@ -76,7 +121,7 @@ export default function PublicProfileView() {
   // }
   return (
     <div className={style.backContainer}>
-      <div className={style.backRectangle}></div>
+      <div className={`${style.backRectangle} ${bg}`}></div>
       <Row className={style.profileContainer}>
         <div className={style.imageContainer}>
           <img
@@ -101,7 +146,8 @@ export default function PublicProfileView() {
                 rel="nofollow"
                 href="https://taggo.one/EIIYS7SIF/vcard.vcf"
                 target="_top"
-                className={style.saveContainer}
+                className=
+                {`${style.saveContainer} ${bg} ${bgHover}`}
               >
                 <span>Guardar Contacto</span>
               </a>
@@ -122,6 +168,8 @@ export default function PublicProfileView() {
               <div className={style.secondaryLinksSort}>
                 <div className={style.secondaryLinkRow}>
                   <ListSecondaryLink
+                  bg={bg}
+                  bgHover={bgHover}
                   linkList={getLinksListByCategory("secondary")}
                   ></ListSecondaryLink>
                 </div>
