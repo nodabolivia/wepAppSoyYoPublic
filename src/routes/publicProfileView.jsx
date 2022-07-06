@@ -9,7 +9,7 @@ import style from "../styles/publicProfileView2.module.css";
 import styleFooter from "../styles/footer.module.css";
 import Loading from "../components/loading";
 import '../styles/theme.css';
-
+import QrCodeGr from "../components/QrCodeGr";
 import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -119,6 +119,7 @@ function handleTheme(theme){
   // if (state === 1) {
   //   return <Loading></Loading>;
   // }
+  const qrComponent = QrCodeGr(params.publicId + "");
   return (
     <div className={style.backContainer}>
       <div className={`${style.backRectangle} ${bg}`}></div>
@@ -136,11 +137,13 @@ function handleTheme(theme){
             <div className={style.infoCareer}>{career}</div>
           </div>
           <div className={style.othersContainer}>
-            <div className={style.qrContainer}>
-              <MdQrCode2 className={style.qrIcon} />
-              <br />
-              Modo Offline
-            </div>
+            {/* <div className={style.qrContainer}> */}
+            <a className={style.qrContainer}  href={qrComponent} download="QRCode">
+                <MdQrCode2 className={style.qrIcon} />
+                <br />
+                Modo Offline
+              </a>
+            {/* </div> */}
             <div>
               <a
                 rel="nofollow"

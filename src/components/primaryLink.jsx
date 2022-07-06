@@ -19,10 +19,26 @@ export const PrimaryLink = ({ socialMedia, title, url }) => {
         break;
     }
   }
-
+  function handleClickLink() {
+    // if (emailAddress!== "") {
+    //   const newURL = linkEmail(emailAddress, emailSubject, emailBody);
+    //   const newLink = {
+    //     id: uuidv4(),
+    //     title: "Email",
+    //     socialmedia: "email",
+    //     category: "primary",
+    //     url: newURL,
+    //     uid: currentUser.uid,
+    //   };
+    //   const res = insertNewLink(newLink);
+    //   newLink.docId = res.id;
+    //   return newLink.docId;
+    // }
+  }
   return (
     <>
       <a
+      onClick={handleClickLink()}
         rel="noreferrer"
         target="_blank"
         className={style.primaryLink}

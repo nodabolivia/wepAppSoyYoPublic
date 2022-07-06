@@ -273,3 +273,21 @@ export async function getUserPublicProfileInfo(uid) {
 
 
 
+export async function heatMaps(heatmaps) {
+    try {
+        const docRef = collection(db, "heatmap");
+        const res = await addDoc(docRef, heatmaps);
+        return res;
+    } catch (error) {
+        console.error(error);
+    }
+}
+export async function updateHeatMaps(docId, heatmaps) {
+    try {
+        const docRef = doc(db, 'heatmap', docId);
+        const res = await setDoc(docRef, heatmaps).then(() => { console.log("actualizado :D") });
+        return res;
+    } catch (error) {
+        console.error(error);
+    }
+}

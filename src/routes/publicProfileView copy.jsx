@@ -25,7 +25,6 @@ export default function PublicProfileView() {
   async function getProfile() {
     const publicId= params.publicId;
     try {
-      
       const userUid = await existUserByPublicId(publicId);
       if (userUid) {
         try {
