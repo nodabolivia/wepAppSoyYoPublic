@@ -13,6 +13,7 @@ function App() {
     <Routes>
       <Route exact path="/" element={<NotFound/>}></Route>
        <Route exact path="u/:publicId" element={<PublicProfileView />}></Route>
+       <Route exact path="/:publicId" element={<PublicProfileView />}></Route>
     </Routes>
   </HashRouter>
   );

@@ -82,17 +82,36 @@
   border-radius: 10px;
   padding: 3px;
   text-align: center;
+  /* font-size: 12px; */
+  /* color: #555; */
+  cursor: pointer;
+  text-decoration: none;
+}
+.qrContainer a,
+.shareContainer{
   font-size: 12px;
   color: #555;
-  cursor: pointer;
+  /* cursor: pointer; */
   text-decoration: none;
 }
 
 .qrContainer:hover,
 .shareContainer:hover {
   background: #eee;
+}
+.qrContainer:hover a,
+.shareContainer:hover {
   color: #3785ff;
 }
+
+
+
+
+
+
+
+
+
 
 .shareIcon,
 .qrIcon {
@@ -113,7 +132,6 @@
   justify-content: flex-start;
   align-items: center;
   display: flex;
-  background: #3785ff;
   border-radius: 40px;
   color: #fff;
   padding: 12px 19px;
@@ -126,7 +144,6 @@
   width: 100%;
   outline: none;
   margin-bottom: 10px;
-  background: #3e0752;
 }
 .saveContainer:hover {
   color: #fff;

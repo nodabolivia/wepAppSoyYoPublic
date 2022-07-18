@@ -1,14 +1,5 @@
 {
   "projects": {
-    "default": "treelinkcv"
-  },
-  "targets": {
-    "treelinkcv": {
-      "hosting": {
-        "publicapp": [
-          "publiccvlinktree"
-        
-      }
-    }
+    "default": "soyyo"
   }
 }

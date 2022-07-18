@@ -8,7 +8,7 @@ import {
 import style from "../styles/publicProfileView2.module.css";
 import styleFooter from "../styles/footer.module.css";
 import Loading from "../components/loading";
-import '../styles/theme.css';
+import "../styles/theme.css";
 import QrCodeGr from "../components/QrCodeGr";
 import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
@@ -17,6 +17,7 @@ import { RiShareForwardLine } from "react-icons/ri";
 import logo from "../assets/img/logo-mt-corp.svg";
 import { ListSecondaryLink } from "../components/listSecondaryLink";
 import { ListPrimaryLink } from "../components/listPrimaryLink";
+import { Contact } from "../components/contact";
 
 export default function PublicProfileView() {
   const params = useParams(); //permite tener info de las URL, es decir las variables que se pasaron por la direccion del enlace
@@ -32,10 +33,10 @@ export default function PublicProfileView() {
   const [theme, setTheme] = useState("default");
   const [bg, setBg] = useState("first");
   const [bgHover, setBgHover] = useState("firstHover");
-  
+  const qrComponent = QrCodeGr(params.publicId + "");
 
   useEffect(() => {
-    setState(1);
+    // setState(1);
     getProfile();
   }, [params]);
 
@@ -70,46 +71,37 @@ export default function PublicProfileView() {
   }
 
   function handleOnLoadImage() {
-      setState(8);
+    setState(8);
   }
 
-
-function handleTheme(theme){
-  switch (theme) {
-    case "default":
-      {
+  function handleTheme(theme) {
+    switch (theme) {
+      case "default": {
         setBg("first");
         setBgHover("firstHover");
         break;
       }
-    case "dark":
-     {
-      setBg("second");
-      setBgHover("secondHover");
-      break;
-     }
-    case "colors":
-      {
+      case "dark": {
+        setBg("second");
+        setBgHover("secondHover");
+        break;
+      }
+      case "colors": {
         setBg("third");
         setBgHover("thirdHover");
         break;
       }
 
-    default:
-      {
+      default: {
         setBg("first");
-        setBgHover("firstHover"); 
-         break;
+        setBgHover("firstHover");
+        break;
       }
-    
+    }
   }
 
-}
-
-
-
-  function getLinksListByCategory(category){
-    const links = linkList.filter((link)=>(link.category===category) );    
+  function getLinksListByCategory(category) {
+    const links = linkList.filter((link) => link.category === category);
     return links;
   }
 
@@ -119,17 +111,12 @@ function handleTheme(theme){
   // if (state === 1) {
   //   return <Loading></Loading>;
   // }
-  const qrComponent = QrCodeGr(params.publicId + "");
   return (
     <div className={style.backContainer}>
       <div className={`${style.backRectangle} ${bg}`}></div>
       <Row className={style.profileContainer}>
         <div className={style.imageContainer}>
-          <img
-            className={style.imageAvatar}
-            src={url}
-            alt={displayName}
-          />
+          <img className={style.imageAvatar} src={url} alt={displayName} />
         </div>
         <div className={style.afterImageContainer}>
           <div className={style.infoContainer}>
@@ -138,22 +125,23 @@ function handleTheme(theme){
           </div>
           <div className={style.othersContainer}>
             {/* <div className={style.qrContainer}> */}
-            <a className={style.qrContainer}  href={qrComponent} download="QRCode">
+            {/* <a className={style.qrContainer}  href={qrComponent} download="QRCode">
+                <MdQrCode2 className={style.qrIcon} />
+                <br />
+                Modo Offline
+              </a> */}
+            <div className={style.qrContainer}>
+              <a href={qrComponent} download="QRCode">
                 <MdQrCode2 className={style.qrIcon} />
                 <br />
                 Modo Offline
               </a>
-            {/* </div> */}
+            </div>{" "}
             <div>
-              <a
-                rel="nofollow"
-                href="https://taggo.one/EIIYS7SIF/vcard.vcf"
-                target="_top"
-                className=
-                {`${style.saveContainer} ${bg} ${bgHover}`}
-              >
-                <span>Guardar Contacto</span>
-              </a>
+              <Contact
+                url={url}
+                style={`${style.saveContainer} ${bg} ${bgHover}`}
+              ></Contact>
             </div>
             <div className={style.shareContainer}>
               <RiShareForwardLine className={style.shareIcon} />
@@ -163,7 +151,7 @@ function handleTheme(theme){
           </div>
           <div className={style.primaryLinksContainer}>
             <ListPrimaryLink
-             linkList={getLinksListByCategory("primary")}
+              linkList={getLinksListByCategory("primary")}
             ></ListPrimaryLink>
           </div>
           <div className={style.secondaryLinksOutsideContainer}>
@@ -171,9 +159,9 @@ function handleTheme(theme){
               <div className={style.secondaryLinksSort}>
                 <div className={style.secondaryLinkRow}>
                   <ListSecondaryLink
-                  bg={bg}
-                  bgHover={bgHover}
-                  linkList={getLinksListByCategory("secondary")}
+                    bg={bg}
+                    bgHover={bgHover}
+                    linkList={getLinksListByCategory("secondary")}
                   ></ListSecondaryLink>
                 </div>
               </div>

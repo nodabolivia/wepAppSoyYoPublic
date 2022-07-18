@@ -12,6 +12,9 @@
     /* background: #DB5A42; */
     /* background: rgba(125,164,120,0.8); */
     background: #4ba3c3;
+    background: rgba(125, 164, 120, 0.8);
+    background: #273c2c;
+
   }
   .firstHover:hover {
     background: #273c2c;
@@ -27,6 +30,10 @@
     /* background:rgba(219,90,66,0.7);  */
     /* background:#273C2C; */
     background: #175676;
+    background: #273c2c;
+    background: rgba(125, 164, 120, 0.8);
+
+
   }
   .second {
     background: rgba(125, 164, 120, 0.8);
