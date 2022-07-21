@@ -3,6 +3,10 @@ import mail from "../assets/img/mail-icon.png";
 import map from "../assets/img/map-icon.png";
 import whatsapp from "../assets/img/whatsapp-icon.png";
 import style from "../styles/linkPrimary.module.css";
+import { useNavigate } from "react-router-dom";
+import { addCollection, addUser, addVista } from "../firebase/fireVewis";
+import { useParams } from "react-router-dom";
+
 
 export const PrimaryLink = ({ socialMedia, title, url }) => {
   function handleSocialMediaIcon() {
@@ -19,26 +23,18 @@ export const PrimaryLink = ({ socialMedia, title, url }) => {
         break;
     }
   }
-  function handleClickLink() {
-    // if (emailAddress!== "") {
-    //   const newURL = linkEmail(emailAddress, emailSubject, emailBody);
-    //   const newLink = {
-    //     id: uuidv4(),
-    //     title: "Email",
-    //     socialmedia: "email",
-    //     category: "primary",
-    //     url: newURL,
-    //     uid: currentUser.uid,
-    //   };
-    //   const res = insertNewLink(newLink);
-    //   newLink.docId = res.id;
-    //   return newLink.docId;
-    // }
+
+   //obtener id publico y red social, mandar a base de datos
+  const params = useParams();
+  const idUser = params.publicId;
+  const doRedirect = () => {
+    addVista(socialMedia, idUser);
+    console.log(idUser)
   }
   return (
     <>
       <a
-      onClick={handleClickLink()}
+       onClick={() => doRedirect()}
         rel="noreferrer"
         target="_blank"
         className={style.primaryLink}

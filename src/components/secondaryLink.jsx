@@ -6,8 +6,20 @@ import {
   RiTwitchFill,
 } from "react-icons/ri";
 import style from "../styles/linkSecondary.module.css";
+import { addVista } from "../firebase/fireVewis";
+import { useParams } from "react-router-dom";
 
-export const SecondaryLink = ({ socialMedia, title, url,bg,bgHover }) => {
+
+export const SecondaryLink = ({ socialMedia, title, url,theme }) => {
+  //obtener id publico y red social, mandarlo a la base de datos
+  const params = useParams();
+  const idUser = params.publicId;
+  const doRedirect = () => {
+    addVista(socialMedia, idUser);
+    console.log(idUser)
+  }
+
+
   function handleSocialMediaIcon() {
     switch (socialMedia) {
       case "facebook":
@@ -32,11 +44,10 @@ export const SecondaryLink = ({ socialMedia, title, url,bg,bgHover }) => {
     <>
       <a
         rel="noreferrer"
-        target="_blank"
-        // href="https://www.linkedin.com/in/irma-mrkanovic-a4638094/"
+        target="_blank"  
         href={url}
-        // className={style.secondaryLink}
-        className={`${style.secondaryLink} ${bg} ${bgHover}`}
+        onClick={() => doRedirect()}
+        className={`${style.secondaryLink} ${theme}`}
       >
         {handleSocialMediaIcon()}
         <span className={style.secondaryLinkSpan}>{title}</span>

@@ -125,6 +125,7 @@ export async function getLinks(uid) {
         console.error(error);
     }
 }
+
 export async function getLinksBySocialMedia(uid, socialmedia) {
     const links = [];
     try {
@@ -257,6 +258,7 @@ export async function getUserPublicProfileInfo(uid) {
     try {
         const profileInfo = await getUserInfo(uid);
         const linksInfo = await getLinks(uid);
+
         return {
             profileInfo: profileInfo,
             linksInfo: linksInfo

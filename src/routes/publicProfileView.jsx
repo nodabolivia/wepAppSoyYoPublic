@@ -5,7 +5,7 @@ import {
   getProfilePhotoUrl,
   getUserPublicProfileInfo,
 } from "../firebase/firebase";
-import style from "../styles/publicProfileView2.module.css";
+import style from "../styles/publicProfileView.module.css";
 import styleFooter from "../styles/footer.module.css";
 import Loading from "../components/loading";
 import "../styles/theme.css";
@@ -13,6 +13,7 @@ import QrCodeGr from "../components/QrCodeGr";
 import { Row } from "react-bootstrap";
 import { MdQrCode2 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
+import { addVista } from "../firebase/fireVewis";
 
 import logo from "../assets/img/logo-mt-corp.svg";
 import { ListSecondaryLink } from "../components/listSecondaryLink";
@@ -21,18 +22,21 @@ import { Contact } from "../components/contact";
 
 export default function PublicProfileView() {
   const params = useParams(); //permite tener info de las URL, es decir las variables que se pasaron por la direccion del enlace
+  //obtener id publica y red social, mandar a la base de datos
+  const idUser = params.publicId;
   const [username, setUsername] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [career, setCareer] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(0);
 
   const [linkList, setLinkList] = useState([]);
   const userRef = useRef(null);
   const [url, setUrl] = useState("");
   const [state, setState] = useState(0);
+  const [theme, setTheme] = useState("color1");
+  const myCanvasProfile = useRef();
 
-  const [theme, setTheme] = useState("default");
-  const [bg, setBg] = useState("first");
-  const [bgHover, setBgHover] = useState("firstHover");
   const qrComponent = QrCodeGr(params.publicId + "");
 
   useEffect(() => {
@@ -50,16 +54,16 @@ export default function PublicProfileView() {
           setUsername(userInfo.profileInfo.username);
           setDisplayName(userInfo.profileInfo.displayName);
           setCareer(userInfo.profileInfo.career);
-          console.log(userInfo.profileInfo.theme);
+          setEmail(userInfo.profileInfo.email);
+          setPhone(userInfo.profileInfo.personalPhone);
           setTheme(userInfo.profileInfo.theme);
-          console.log(theme);
-          handleTheme(userInfo.profileInfo.theme);
           setLinkList(userInfo.linksInfo);
           const url = await getProfilePhotoUrl(
             userInfo.profileInfo.profilePicture
           );
           userRef.current = userInfo.profileInfo;
           setUrl(url);
+          await getCanvasProfile(url);
           // setState(8);
         } catch (error) {
           console.log(error);
@@ -69,35 +73,19 @@ export default function PublicProfileView() {
       }
     } catch (error) {}
   }
+  async function getCanvasProfile(url) {
+    const context = myCanvasProfile.current.getContext("2d");
+    const image = new Image();
+    image.src = url;
+    image.onload = () => {
+      context.canvas.width = image.width;
+      context.canvas.height = image.height;
+      context.drawImage(image, 0, 0);
+    };
+  }
 
   function handleOnLoadImage() {
     setState(8);
-  }
-
-  function handleTheme(theme) {
-    switch (theme) {
-      case "default": {
-        setBg("first");
-        setBgHover("firstHover");
-        break;
-      }
-      case "dark": {
-        setBg("second");
-        setBgHover("secondHover");
-        break;
-      }
-      case "colors": {
-        setBg("third");
-        setBgHover("thirdHover");
-        break;
-      }
-
-      default: {
-        setBg("first");
-        setBgHover("firstHover");
-        break;
-      }
-    }
   }
 
   function getLinksListByCategory(category) {
@@ -108,15 +96,23 @@ export default function PublicProfileView() {
   if (state === 7) {
     return <div>El usuario no existe</div>;
   }
+
+  const doRedirect = (socialMedia) => {
+    addVista(socialMedia, idUser);
+  };
   // if (state === 1) {
   //   return <Loading></Loading>;
   // }
   return (
     <div className={style.backContainer}>
-      <div className={`${style.backRectangle} ${bg}`}></div>
+      <div className={`${style.backRectangle} ${theme} rec `}></div>
       <Row className={style.profileContainer}>
         <div className={style.imageContainer}>
-          <img className={style.imageAvatar} src={url} alt={displayName} />
+          <canvas
+            className={style.imageAvatar}
+            ref={myCanvasProfile}
+            id="canvas-profile"
+          ></canvas>
         </div>
         <div className={style.afterImageContainer}>
           <div className={style.infoContainer}>
@@ -139,11 +135,15 @@ export default function PublicProfileView() {
             </div>{" "}
             <div>
               <Contact
+                style={`${style.saveContainer} ${theme}`}
                 url={url}
-                style={`${style.saveContainer} ${bg} ${bgHover}`}
+                name={displayName}
+                email={email}
+                phone={phone}
+                career={career}
               ></Contact>
             </div>
-            <div className={style.shareContainer}>
+            <div className={style.shareContainer} onClick={() => doRedirect('shareRRSS')}>
               <RiShareForwardLine className={style.shareIcon} />
               <br />
               Compartir en RRSS
@@ -159,8 +159,7 @@ export default function PublicProfileView() {
               <div className={style.secondaryLinksSort}>
                 <div className={style.secondaryLinkRow}>
                   <ListSecondaryLink
-                    bg={bg}
-                    bgHover={bgHover}
+                    theme={`${theme}`}
                     linkList={getLinksListByCategory("secondary")}
                   ></ListSecondaryLink>
                 </div>
