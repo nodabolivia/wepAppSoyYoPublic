@@ -126,6 +126,24 @@ export async function getLinks(uid) {
     }
 }
 
+
+export async function getLinksCustoms(uid) {
+    const links = [];
+    try {
+      const collectionRef = collection(db, "links_customs");
+      const q = query(collectionRef, where("uid", "==", uid));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const link = { ...doc.data() };
+        link.docId = doc.id;
+        links.push(link);
+      });
+      return links;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 export async function getLinksBySocialMedia(uid, socialmedia) {
     const links = [];
     try {
@@ -258,38 +276,14 @@ export async function getUserPublicProfileInfo(uid) {
     try {
         const profileInfo = await getUserInfo(uid);
         const linksInfo = await getLinks(uid);
-
+        const linksCustomsInfo = await getLinksCustoms(uid);
         return {
             profileInfo: profileInfo,
-            linksInfo: linksInfo
+            linksInfo: linksInfo,
+            linksCustomsInfo: linksCustomsInfo,
         }
     } catch (error) {
         console.error(error);
     }
 }
 
-
-
-
-
-
-
-
-export async function heatMaps(heatmaps) {
-    try {
-        const docRef = collection(db, "heatmap");
-        const res = await addDoc(docRef, heatmaps);
-        return res;
-    } catch (error) {
-        console.error(error);
-    }
-}
-export async function updateHeatMaps(docId, heatmaps) {
-    try {
-        const docRef = doc(db, 'heatmap', docId);
-        const res = await setDoc(docRef, heatmaps).then(() => { console.log("actualizado :D") });
-        return res;
-    } catch (error) {
-        console.error(error);
-    }
-}

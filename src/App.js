@@ -1,4 +1,6 @@
 import './styles/App.css';
+import "./utils/dropConsole";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import PublicProfileView from './routes/publicProfileView';

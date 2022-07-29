@@ -7,7 +7,7 @@
   text-align: center;
   margin-top: 50px;
 
-  position: absolute; /* position absolute instead of fixed */
+  position: relative; /* position absolute instead of fixed */
   bottom: -140px; /* move inside the body margin */
   left: 0;
   right: 0;
